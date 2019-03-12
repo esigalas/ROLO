@@ -1,4 +1,5 @@
 # Copyright (c) <2016> <GUANGHAN NING>. All Rights Reserved.
+
  
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,10 +25,13 @@ Description:
 '''
 
 # Imports
+import sys
+sys.path.append("/home/esigalas/workspace/ROLO/utils/")
 import ROLO_utils as utils
 
 import tensorflow as tf
-from tensorflow.models.rnn import rnn, rnn_cell
+#from tensorflow.models.rnn import rnn, rnn_cell
+from tensorflow.python.ops import rnn, rnn_cell
 import cv2
 
 import numpy as np
@@ -122,7 +126,9 @@ class ROLO_TF:
         # Build rolo layers
         self.lstm_module = self.LSTM_single('lstm_test', self.x, self.istate, self.weights, self.biases)
         self.ious= tf.Variable(tf.zeros([self.batch_size]), name="ious")
-        self.sess = tf.Session()
+        config = tf.ConfigProto(allow_soft_placement = True)
+        self.sess = tf.Session(config = config)
+        #self.sess = tf.Session()
         self.sess.run(tf.initialize_all_variables())
         self.saver = tf.train.Saver()
         #self.saver.restore(self.sess, self.rolo_weights_file)
@@ -146,7 +152,8 @@ class ROLO_TF:
         # Initializing the variables
         init = tf.initialize_all_variables()
         # Launch the graph
-        with tf.Session() as sess:
+        config = tf.ConfigProto(allow_soft_placement = True)
+        with tf.Session(config=config) as sess:
 
             if (self.restore_weights == True):
                 sess.run(init)
@@ -255,8 +262,8 @@ class ROLO_TF:
                     #self.rolo_weights_file= '/u03/Guanghan/dev/ROLO-dev/output/ROLO_model/model_step9_exp2.ckpt'
                     #self.rolo_weights_file= '/u03/Guanghan/dev/ROLO-dev/output/ROLO_model/model_step1_exp2.ckpt'
 
-                    self.rolo_weights_file= '/u03/Guanghan/dev/ROLO-dev/output/ROLO_model/model_step3_exp1_old.ckpt'
-
+                    #self.rolo_weights_file= '/u03/Guanghan/dev/ROLO-dev/output/ROLO_model/model_step3_exp1_old.ckpt'
+                    self.rolo_weights_file= '/home/esigalas/workspace/ROLO/models/model_demo.ckpt'
                     self.num_steps = 3  # number of frames as an input sequence
                     print("TESTING ROLO on video sequence: ", sequence_name)
                     self.testing(x_path, y_path)

@@ -27,6 +27,8 @@ import cv2
 import os
 import numpy as np
 import sys
+sys.path.append("/home/esigalas/workspace/ROLO/utils/")
+
 import ROLO_utils as utils
 '''----------------------------------------main-----------------------------------------------------'''
 def main(argv):

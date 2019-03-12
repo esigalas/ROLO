@@ -24,10 +24,14 @@ Description:
 '''
 
 # Imports
+import sys
+sys.path.append("/home/esigalas/workspace/ROLO/utils/")
 import ROLO_utils as utils
 
 import tensorflow as tf
-from tensorflow.models.rnn import rnn, rnn_cell
+#from tensorflow.models.rnn import rnn, rnn_cell
+from tensorflow.python.ops import rnn, rnn_cell
+
 import cv2
 
 import numpy as np
@@ -58,7 +62,8 @@ class ROLO_TF:
     w_img, h_img = [352, 240]
 
     # ROLO Network Parameters
-    rolo_weights_file = '/u03/Guanghan/dev/ROLO-dev/output/ROLO_model/model_step6_exp1.ckpt' 
+    # rolo_weights_file = '/u03/Guanghan/dev/ROLO-dev/output/ROLO_model/model_step6_exp1.ckpt' 
+    rolo_weights_file = '/home/esigalas/workspace/ROLO/models/model_step6_exp1.ckpt'
     lstm_depth = 3
     num_steps = 6  # number of frames as an input sequence
     num_feat = 4096
